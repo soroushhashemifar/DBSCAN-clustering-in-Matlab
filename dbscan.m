@@ -1,4 +1,9 @@
 function dataset = dbscan(dataset, epsilon, minPoints)
+	%	first load dataset:
+	% 	1- csvfile = textscan (fopen('dataset2'), '%s%f%f', 'delimiter', ',');
+	%	2- dataset = [csvfile{2} csvfile{3}];
+	%	3- ds = dbscan(dataset, ..., ...);
+	
 	dataset = [dataset zeros(size(dataset, 1), 1)];
 	clusterID = 1;
 	for i=1:size(dataset, 1)

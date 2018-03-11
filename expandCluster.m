@@ -1,7 +1,11 @@
 function [flag, dataset] = expandCluster(dataset, point, clusterID, epsilon, minPoints)
 	clusteredPoints = [];
 	seeds = regionQuery(dataset, point, epsilon);
-	
+	%disp('#########point########')	
+	%disp(point)
+	%disp('#########seeds###########')
+	%disp(seeds)
+
 	% if seeds members number is lower than minPoints, all of them are clustered as noise
 	if size(seeds, 1) < minPoints
 		flag = false;
@@ -21,18 +25,19 @@ function [flag, dataset] = expandCluster(dataset, point, clusterID, epsilon, min
 		result = regionQuery(dataset, currentP, epsilon);
 		if size(result, 1) >= minPoints
 			for i=1:size(result, 1)
-				resultP = result(i, :);
-				if resultP(3) == 0
-					seeds = [seeds; resultP];
+
+				if result(i, 3) == 0
+					seeds = [seeds; result(i, :)];
 				end
-				resultP(:, 3) = clusterID;
-				dataset(ismember(dataset(:, 1:2), resultP(:, 1:2))(:, 1), 3) = clusterID;
+
+				result(i, 3) = clusterID;
+				dataset(ismember(dataset(:, 1:2), result(i, 1:2))(:, 1), 3) = clusterID;
 			end
 		end
 		
 		% remove currentP from seeds
-		x = (seeds(:, 1:2)==currentP(1:2))(:, 1);
-		seeds(x, :) = nan;
+		% we don't search for currentP because we know it's the first row of seeds matrix
+		seeds(1, :) = nan;
 		seeds = seeds(~isnan(seeds)(:, 1), :);
 	end
 	flag = true;
