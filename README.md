@@ -7,3 +7,5 @@ You can run the algorithm by this pattern: `new_dataset = dbscan(dataset, epsilo
 
 You can see the DBSCAN result below:
 ![dbscan_run](https://github.com/soroush76/DBSCAN-clustering-algorithm/blob/master/dbscan_run.jpg)
+
+NOTE: Black points are noises.
